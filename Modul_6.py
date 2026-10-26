@@ -58,5 +58,22 @@ class Record:
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
 
 class AddressBook(UserDict):
-    # реалізація класу
-		pass
+    def find(self, name):
+        if name in self.data:
+            return self.data[name]
+        return None
+
+    def add_record(self, record):
+        if record.name.value in self.data:
+            raise ValueError("Contact already exists")
+        self.data[record.name.value] = record
+        return self
+
+    def delete(self, name):
+        if name in self.data:
+            del self.data[name]
+        return self
+
+    def __str__(self):
+        return "\n".join(str(record) for record in self.data.values())
+
