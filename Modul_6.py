@@ -34,7 +34,7 @@ class Record:
                 return i
         return None
 
-        def add_phone(self, phone):
+    def add_phone(self, phone):
         if self.find_phone(phone) is None:
             self.phones.append(Phone(phone))
         return self
@@ -45,7 +45,14 @@ class Record:
             self.phones.remove(found_phone)
         return self
 
-
+	def edit_phone(self, old_phone, new_phone):
+        new_phone_obj = Phone(new_phone)
+        old_phone_obj = self.find_phone(old_phone)
+        if old_phone_obj is not None:
+            old_phone_obj.value = new_phone_obj.value
+        else:
+            raise ValueError("Phone not found")
+        return self
 
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
